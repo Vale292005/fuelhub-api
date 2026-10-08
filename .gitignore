@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Configuración y claves locales
+/src/main/resources/application.properties
+/src/main/resources/application-dev.properties
+
+# Docker y OS
+.DS_Store
+*.log
