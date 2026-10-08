@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.11
+    container_name: fuelhub-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: fuelhub_db
+      MYSQL_ROOT_PASSWORD: secretpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
+  api:
+    build: .
+    container_name: fuelhub-api
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://db:3306/fuelhub_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=secretpassword
+      - JWT_SECRET=estaEsUnaClaveSecretaSuperSeguraParaFuelHub2026BackendJavaMariaDB
+      - JWT_EXPIRATION=86400000
+    depends_on:
+      - db
+
+volumes:
+  mariadb_data:
